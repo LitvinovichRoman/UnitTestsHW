@@ -9,28 +9,36 @@ import XCTest
 @testable import UnitTestsHW
 
 final class UnitTestsHWTests: XCTestCase {
+    var sut: DataFile!
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        super.setUp()
+        sut = DataFile()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        sut = nil
+        super.tearDown()
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testAddition() {
+        let result = sut.addition(x: 5, y: 6)
+        XCTAssertEqual(result, 11)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testMultiplication() {
+        let result = sut.multiplication(x: 5, y: 3)
+        XCTAssertEqual(result, 15)
     }
 
+    func testDividing() throws {
+        let result = try sut.dividing(x: 10.0, y: 5.0)
+        XCTAssertEqual(result, 2.0, accuracy: 0.001)
+    }
+
+    func testDividingByZero() throws {
+        XCTAssertThrowsError(try sut.dividing(x: 10.0, y: 0.0))
+    }
+
+    
 }
